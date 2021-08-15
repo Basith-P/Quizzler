@@ -20,6 +20,17 @@ class QuizPage extends StatefulWidget {
   _QuizPageState createState() => _QuizPageState();
 }
 
+List<Widget> scoreKeeper = [
+  Icon(
+    Icons.check,
+    color: Colors.green,
+  ),
+  Icon(
+    Icons.close,
+    color: Colors.red,
+  ),
+];
+
 class _QuizPageState extends State<QuizPage> {
   @override
   Widget build(BuildContext context) {
@@ -27,6 +38,13 @@ class _QuizPageState extends State<QuizPage> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        Padding(
+          padding: const EdgeInsets.all(15.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: scoreKeeper,
+          ),
+        ),
         Expanded(
           flex: 5,
           child: Center(
@@ -57,7 +75,16 @@ class _QuizPageState extends State<QuizPage> {
                 "True",
                 style: TextStyle(fontSize: 20),
               ),
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  scoreKeeper.add(
+                    Icon(
+                      Icons.check,
+                      color: Colors.green,
+                    ),
+                  );
+                });
+              },
             ),
           ),
         ),
@@ -78,7 +105,16 @@ class _QuizPageState extends State<QuizPage> {
                 "False",
                 style: TextStyle(fontSize: 20),
               ),
-              onPressed: () {},
+              onPressed: () {
+                setState(() {
+                  scoreKeeper.add(
+                    Icon(
+                      Icons.close,
+                      color: Colors.red,
+                    ),
+                  );
+                });
+              },
             ),
           ),
         ),
