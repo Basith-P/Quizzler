@@ -2,5 +2,5 @@ class QnA {
   String q;
   bool a;
 
-  QnA({required this.q, required this.a});
+  QnA(this.q, this.a);
 }

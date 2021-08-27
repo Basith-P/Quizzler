@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../models/qna.dart';
+import '../quiz_brain.dart';
+
+QuizBrain quizBrain = QuizBrain();
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -23,14 +25,6 @@ class QuizPage extends StatefulWidget {
 }
 
 List<Widget> scoreKeeper = [];
-List<QnA> questionBank = [
-  QnA(q: 'You can lead a cow down stairs but not up stairs', a: false),
-  QnA(q: 'Approximately one quarter of human bones are in the feet', a: true),
-  QnA(q: 'A slug\'s blood is green', a: true),
-];
-// ];
-
-int qNum = 0;
 
 class _QuizPageState extends State<QuizPage> {
   @override
@@ -50,7 +44,7 @@ class _QuizPageState extends State<QuizPage> {
           flex: 5,
           child: Center(
             child: Text(
-              questionBank[qNum].q,
+              quizBrain.getQText(),
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 25,
@@ -77,8 +71,20 @@ class _QuizPageState extends State<QuizPage> {
                 style: TextStyle(fontSize: 20),
               ),
               onPressed: () {
+                bool correctAns = quizBrain.getAText();
+                if (correctAns == true) {
+                  scoreKeeper.add(Icon(
+                    Icons.check,
+                    color: Colors.green,
+                  ));
+                } else {
+                  scoreKeeper.add(Icon(
+                    Icons.close,
+                    color: Colors.red,
+                  ));
+                }
                 setState(() {
-                  qNum++;
+                  quizBrain.nextQuestion();
                   scoreKeeper.add(
                     Icon(
                       Icons.check,
@@ -108,7 +114,7 @@ class _QuizPageState extends State<QuizPage> {
                 style: TextStyle(fontSize: 20),
               ),
               onPressed: () {
-                bool correctAns = questionBank[qNum].a;
+                bool correctAns = quizBrain.getAText();
                 if (correctAns == false) {
                   scoreKeeper.add(Icon(
                     Icons.check,
@@ -121,7 +127,7 @@ class _QuizPageState extends State<QuizPage> {
                   ));
                 }
                 setState(() {
-                  qNum++;
+                  quizBrain.nextQuestion();
                 });
               },
             ),
