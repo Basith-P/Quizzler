@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../models/qna.dart';
+
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -21,11 +23,12 @@ class QuizPage extends StatefulWidget {
 }
 
 List<Widget> scoreKeeper = [];
-List<String> qustions = [
-  'You can lead a cow down stairs but not up stairs',
-  'Approximately one quarter of human bones are in the feet',
-  'A slug\'s blood is green'
+List<QnA> questionBank = [
+  QnA(q: 'You can lead a cow down stairs but not up stairs', a: false),
+  QnA(q: 'Approximately one quarter of human bones are in the feet', a: true),
+  QnA(q: 'A slug\'s blood is green', a: true),
 ];
+// ];
 
 int qNum = 0;
 
@@ -47,7 +50,7 @@ class _QuizPageState extends State<QuizPage> {
           flex: 5,
           child: Center(
             child: Text(
-              qustions[qNum],
+              questionBank[qNum].q,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 25,
@@ -76,6 +79,12 @@ class _QuizPageState extends State<QuizPage> {
               onPressed: () {
                 setState(() {
                   qNum++;
+                  scoreKeeper.add(
+                    Icon(
+                      Icons.check,
+                      color: Colors.green,
+                    ),
+                  );
                 });
               },
             ),
@@ -99,6 +108,18 @@ class _QuizPageState extends State<QuizPage> {
                 style: TextStyle(fontSize: 20),
               ),
               onPressed: () {
+                bool correctAns = questionBank[qNum].a;
+                if (correctAns == false) {
+                  scoreKeeper.add(Icon(
+                    Icons.check,
+                    color: Colors.green,
+                  ));
+                } else {
+                  scoreKeeper.add(Icon(
+                    Icons.close,
+                    color: Colors.red,
+                  ));
+                }
                 setState(() {
                   qNum++;
                 });

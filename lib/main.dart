@@ -11,6 +11,7 @@ class Quizzler extends StatelessWidget {
       theme: ThemeData.dark(),
       title: "Quizzler",
       home: HomeScreen(),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
