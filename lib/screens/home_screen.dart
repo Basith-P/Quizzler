@@ -27,6 +27,7 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Widget> scoreKeeper = [];
+  int _score = 0;
 
   void checkAns(bool userPickedAns) {
     bool correctAns = quizBrain.getAText();
@@ -36,6 +37,7 @@ class _QuizPageState extends State<QuizPage> {
         Alert(
           context: context,
           title: 'You\'ve finished all questions!!',
+          desc: 'Your score: $_score / 13',
           content: Column(
             children: [
               const SizedBox(height: 40),
@@ -67,10 +69,12 @@ class _QuizPageState extends State<QuizPage> {
         ).show();
 
         quizBrain.reset();
+        _score = 0;
 
         scoreKeeper = [];
       } else {
         if (userPickedAns == correctAns) {
+          _score++;
           scoreKeeper.add(Icon(
             Icons.check,
             color: Colors.green,
