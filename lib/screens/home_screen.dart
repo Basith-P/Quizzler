@@ -24,9 +24,27 @@ class QuizPage extends StatefulWidget {
   _QuizPageState createState() => _QuizPageState();
 }
 
-List<Widget> scoreKeeper = [];
-
 class _QuizPageState extends State<QuizPage> {
+  List<Widget> scoreKeeper = [];
+
+  void checkAns(bool userPickedAns) {
+    bool correctAns = quizBrain.getAText();
+    if (userPickedAns == correctAns) {
+      scoreKeeper.add(Icon(
+        Icons.check,
+        color: Colors.green,
+      ));
+    } else {
+      scoreKeeper.add(Icon(
+        Icons.close,
+        color: Colors.red,
+      ));
+    }
+    setState(() {
+      quizBrain.nextQuestion();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -71,27 +89,7 @@ class _QuizPageState extends State<QuizPage> {
                 style: TextStyle(fontSize: 20),
               ),
               onPressed: () {
-                bool correctAns = quizBrain.getAText();
-                if (correctAns == true) {
-                  scoreKeeper.add(Icon(
-                    Icons.check,
-                    color: Colors.green,
-                  ));
-                } else {
-                  scoreKeeper.add(Icon(
-                    Icons.close,
-                    color: Colors.red,
-                  ));
-                }
-                setState(() {
-                  quizBrain.nextQuestion();
-                  scoreKeeper.add(
-                    Icon(
-                      Icons.check,
-                      color: Colors.green,
-                    ),
-                  );
-                });
+                checkAns(true);
               },
             ),
           ),
@@ -114,21 +112,7 @@ class _QuizPageState extends State<QuizPage> {
                 style: TextStyle(fontSize: 20),
               ),
               onPressed: () {
-                bool correctAns = quizBrain.getAText();
-                if (correctAns == false) {
-                  scoreKeeper.add(Icon(
-                    Icons.check,
-                    color: Colors.green,
-                  ));
-                } else {
-                  scoreKeeper.add(Icon(
-                    Icons.close,
-                    color: Colors.red,
-                  ));
-                }
-                setState(() {
-                  quizBrain.nextQuestion();
-                });
+                checkAns(false);
               },
             ),
           ),
