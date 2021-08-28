@@ -38,4 +38,16 @@ class QuizBrain {
   bool getAText() {
     return _questionBank[_qNum].a;
   }
+
+  bool isFinished() {
+    if (_qNum >= _questionBank.length - 1) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  void reset() {
+    _qNum = 0;
+  }
 }

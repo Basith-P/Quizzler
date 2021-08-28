@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 import '../quiz_brain.dart';
 
@@ -24,9 +25,64 @@ class QuizPage extends StatefulWidget {
   _QuizPageState createState() => _QuizPageState();
 }
 
-List<Widget> scoreKeeper = [];
-
 class _QuizPageState extends State<QuizPage> {
+  List<Widget> scoreKeeper = [];
+
+  void checkAns(bool userPickedAns) {
+    bool correctAns = quizBrain.getAText();
+
+    setState(() {
+      if (quizBrain.isFinished() == true) {
+        Alert(
+            context: context,
+            title: 'You\'ve finished all questions!!',
+            content: Column(
+              children: [
+                const SizedBox(height: 40),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: Size(double.infinity, 50),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15)),
+                    primary: Colors.green,
+                  ),
+                  onPressed: () => Navigator.pop(context),
+                  child: Text(
+                    'Reset',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                ),
+              ],
+            ),
+            style: AlertStyle(
+              titleStyle: TextStyle(color: Colors.white, fontSize: 24),
+              descStyle: TextStyle(color: Colors.white70),
+              backgroundColor: Colors.grey[900],
+              alertBorder: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25)),
+              isButtonVisible: false,
+            )).show();
+
+        quizBrain.reset();
+
+        scoreKeeper = [];
+      } else {
+        if (userPickedAns == correctAns) {
+          scoreKeeper.add(Icon(
+            Icons.check,
+            color: Colors.green,
+          ));
+        } else {
+          scoreKeeper.add(Icon(
+            Icons.close,
+            color: Colors.red,
+          ));
+        }
+        quizBrain.nextQuestion();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -71,27 +127,7 @@ class _QuizPageState extends State<QuizPage> {
                 style: TextStyle(fontSize: 20),
               ),
               onPressed: () {
-                bool correctAns = quizBrain.getAText();
-                if (correctAns == true) {
-                  scoreKeeper.add(Icon(
-                    Icons.check,
-                    color: Colors.green,
-                  ));
-                } else {
-                  scoreKeeper.add(Icon(
-                    Icons.close,
-                    color: Colors.red,
-                  ));
-                }
-                setState(() {
-                  quizBrain.nextQuestion();
-                  scoreKeeper.add(
-                    Icon(
-                      Icons.check,
-                      color: Colors.green,
-                    ),
-                  );
-                });
+                checkAns(true);
               },
             ),
           ),
@@ -114,21 +150,7 @@ class _QuizPageState extends State<QuizPage> {
                 style: TextStyle(fontSize: 20),
               ),
               onPressed: () {
-                bool correctAns = quizBrain.getAText();
-                if (correctAns == false) {
-                  scoreKeeper.add(Icon(
-                    Icons.check,
-                    color: Colors.green,
-                  ));
-                } else {
-                  scoreKeeper.add(Icon(
-                    Icons.close,
-                    color: Colors.red,
-                  ));
-                }
-                setState(() {
-                  quizBrain.nextQuestion();
-                });
+                checkAns(false);
               },
             ),
           ),
