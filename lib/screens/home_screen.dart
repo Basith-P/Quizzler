@@ -34,34 +34,37 @@ class _QuizPageState extends State<QuizPage> {
     setState(() {
       if (quizBrain.isFinished() == true) {
         Alert(
-            context: context,
-            title: 'You\'ve finished all questions!!',
-            content: Column(
-              children: [
-                const SizedBox(height: 40),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: Size(double.infinity, 50),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15)),
-                    primary: Colors.green,
-                  ),
-                  onPressed: () => Navigator.pop(context),
-                  child: Text(
-                    'Reset',
-                    style: TextStyle(fontSize: 18),
-                  ),
+          context: context,
+          title: 'You\'ve finished all questions!!',
+          content: Column(
+            children: [
+              const SizedBox(height: 40),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  minimumSize: Size(double.infinity, 50),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15)),
+                  primary: Colors.green,
                 ),
-              ],
-            ),
-            style: AlertStyle(
-              titleStyle: TextStyle(color: Colors.white, fontSize: 24),
-              descStyle: TextStyle(color: Colors.white70),
-              backgroundColor: Colors.grey[900],
-              alertBorder: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25)),
-              isButtonVisible: false,
-            )).show();
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  'Reset',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+            ],
+          ),
+          style: AlertStyle(
+            isCloseButton: false,
+            isOverlayTapDismiss: false,
+            titleStyle: TextStyle(color: Colors.white, fontSize: 24),
+            descStyle: TextStyle(color: Colors.white70),
+            backgroundColor: Colors.grey[900],
+            alertBorder:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+            isButtonVisible: false,
+          ),
+        ).show();
 
         quizBrain.reset();
 
